@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أداة معتز لتنزيل فيديوهات YouTube</title>
-    <meta name="description" content="أداة معتز المجانية لتنزيل ومعاينة فيديوهات اليوتيوب بسرعة وسهولة.">
-    
+    <title>أداة معتز - تنزيل مباشر</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -13,169 +11,120 @@
             theme: {
                 extend: {
                     fontFamily: { sans: ['Tajawal', 'sans-serif'] },
-                    colors: { brand: { 50: '#f0fdfa', 100: '#ccfbf1', 500: '#14b8a6', 600: '#0d9488', 900: '#134e4a' } }
+                    colors: { brand: { 500: '#14b8a6', 600: '#0d9488' } }
                 }
             }
         }
     </script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
     <style>
-        body { font-family: 'Tajawal', sans-serif; transition: background-color 0.3s ease; }
-        .glass-effect { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); }
-        .dark .glass-effect { background: rgba(17, 24, 39, 0.7); }
+        body { font-family: 'Tajawal', sans-serif; background-color: #0f172a; color: white; }
         .gradient-text { background: linear-gradient(to right, #14b8a6, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* أنيميشن التحميل */
+        .loader-bar { width: 0%; height: 4px; background: #14b8a6; transition: width 0.5s; }
     </style>
 </head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
 
-<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200">
+    <div class="max-w-4xl w-full text-center space-y-8">
+        <h1 class="text-5xl font-extrabold">أداة معتز <span class="gradient-text">للتنزيل المباشر</span></h1>
 
-    <nav class="fixed w-full z-50 glass-effect border-b border-gray-200 dark:border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex-shrink-0 flex items-center gap-2">
-                    <i class="fa-solid fa-bolt text-brand-500 text-2xl"></i>
-                    <span class="text-xl font-bold dark:text-white">معتز تيك</span>
-                </div>
-                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors">
-                    <i id="theme-toggle-dark-icon" class="fa-solid fa-moon hidden"></i>
-                    <i id="theme-toggle-light-icon" class="fa-solid fa-sun hidden"></i>
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <main class="relative pt-32 pb-20 px-4 flex flex-col items-center min-h-screen">
-        <div class="max-w-4xl w-full text-center space-y-8">
-            <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight">
-                أداة معتز فيديوهات <br>
-                <span class="gradient-text">YouTube المجانية</span>
-            </h1>
-            <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                قم بلصق رابط YouTube للمعاينة والتحميل الفوري بجودة عالية.
-            </p>
-
-            <div class="max-w-xl mx-auto mt-10 space-y-4">
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <input id="video-url" type="url" placeholder="https://www.youtube.com/watch?v=..." 
-                           class="flex-1 px-5 py-4 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-brand-500 outline-none text-left" dir="ltr">
-                    <button id="process-btn" class="px-8 py-4 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold transition-all shadow-lg flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <span>تحليل</span>
-                    </button>
-                </div>
-                <p id="status-msg" class="text-sm hidden"></p>
-            </div>
-
-            <div id="preview-section" class="hidden animate-fade-in space-y-6 bg-white dark:bg-gray-800 p-6 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-xl mt-12">
-                <h3 class="text-xl font-bold text-brand-500">معاينة الفيديو</h3>
-                
-                <div class="relative aspect-video w-full rounded-2xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700">
+        <div class="max-w-xl mx-auto">
+            <input id="video-url" type="url" placeholder="ضع رابط الفيديو هنا..." 
+                   class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-800 outline-none text-left mb-4" dir="ltr">
+            
+            <div id="preview-area" class="hidden animate-fade-in space-y-4 bg-gray-800 p-6 rounded-2xl border border-gray-700 shadow-2xl">
+                <div class="relative aspect-video rounded-lg overflow-hidden border border-gray-600">
                     <iframe id="video-iframe" class="absolute inset-0 w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
                 </div>
+                
+                <div id="progress-container" class="hidden w-full bg-gray-700 rounded-full h-1 overflow-hidden">
+                    <div id="progress-bar" class="loader-bar"></div>
+                </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-right">
-                    <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-xl flex justify-between items-center border border-gray-100 dark:border-gray-600">
-                        <span class="font-medium">فيديو MP4 (720p)</span>
-                        <button onclick="downloadFile('mp4')" class="bg-green-600 hover:bg-green-500 text-white px-5 py-2 rounded-lg font-bold transition-transform active:scale-95">
-                            <i class="fa-solid fa-download"></i>
-                        </button>
-                    </div>
-                    <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-xl flex justify-between items-center border border-gray-100 dark:border-gray-600">
-                        <span class="font-medium">صوت فقط MP3</span>
-                        <button onclick="downloadFile('mp3')" class="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-lg font-bold transition-transform active:scale-95">
-                            <i class="fa-solid fa-music"></i>
-                        </button>
-                    </div>
+                <div class="grid grid-cols-1 gap-4">
+                    <button id="direct-download-btn" class="w-full py-4 bg-green-600 hover:bg-green-500 rounded-xl font-bold flex items-center justify-center gap-2 transition-all">
+                        <i class="fa-solid fa-file-arrow-down"></i>
+                        <span id="btn-text">تنزيل فيديو MP4 (720p) مباشر</span>
+                    </button>
+                    <p id="download-note" class="text-xs text-gray-400">سيتم بدء التنزيل في المتصفح تلقائياً</p>
                 </div>
             </div>
         </div>
-    </main>
-
-    <footer class="py-10 text-center text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-800">
-        <p>© 2026 مطور بواسطة معتز | جميع الحقوق محفوظة</p>
-    </footer>
+    </div>
 
     <script>
-        // --- 1. Dark Mode Logic ---
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const darkIcon = document.getElementById('theme-toggle-dark-icon');
-        const lightIcon = document.getElementById('theme-toggle-light-icon');
-
-        function updateIcons() {
-            if (document.documentElement.classList.contains('dark')) {
-                lightIcon.classList.remove('hidden'); darkIcon.classList.add('hidden');
-            } else {
-                darkIcon.classList.remove('hidden'); lightIcon.classList.add('hidden');
-            }
-        }
-
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-        updateIcons();
-
-        themeToggleBtn.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-            localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-            updateIcons();
-        });
-
-        // --- 2. Video Analysis Logic ---
         const urlInput = document.getElementById('video-url');
-        const processBtn = document.getElementById('process-btn');
-        const previewSection = document.getElementById('preview-section');
+        const previewArea = document.getElementById('preview-area');
         const videoIframe = document.getElementById('video-iframe');
-        const statusMsg = document.getElementById('status-msg');
+        const downloadBtn = document.getElementById('direct-download-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const progressContainer = document.getElementById('progress-container');
+        const btnText = document.getElementById('btn-text');
 
-        function getYoutubeID(url) {
+        // استخراج الـ ID للعرض
+        urlInput.addEventListener('input', () => {
+            const url = urlInput.value.trim();
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
             const match = url.match(regExp);
-            return (match && match[2].length === 11) ? match[2] : null;
-        }
-
-        function processVideo() {
-            const url = urlInput.value.trim();
-            const videoID = getYoutubeID(url);
-
-            if (videoID) {
-                previewSection.classList.remove('hidden');
-                videoIframe.src = `https://www.youtube.com/embed/${videoID}`;
-                statusMsg.textContent = "تم العثور على الفيديو بنجاح!";
-                statusMsg.className = "text-sm text-green-500 animate-pulse";
-                statusMsg.classList.remove('hidden');
-                previewSection.scrollIntoView({ behavior: 'smooth' });
-            } else {
-                statusMsg.textContent = "يرجى إدخال رابط يوتيوب صحيح";
-                statusMsg.className = "text-sm text-red-500";
-                statusMsg.classList.remove('hidden');
-                previewSection.classList.add('hidden');
+            
+            if (match && match[2].length === 11) {
+                previewArea.classList.remove('hidden');
+                videoIframe.src = `https://www.youtube.com/embed/${match[2]}`;
             }
-        }
+        });
 
-        processBtn.addEventListener('click', processVideo);
-        urlInput.addEventListener('input', () => { if(urlInput.value.length > 20) processVideo(); });
+        // ميكانيكية التنزيل "الدايركت"
+        downloadBtn.addEventListener('click', async () => {
+            const videoUrl = urlInput.value;
+            if(!videoUrl) return;
 
-        // --- 3. Download Logic ---
-        function downloadFile(type) {
-            const url = urlInput.value.trim();
-            if (!url) return;
+            // 1. تغيير حالة الزر
+            btnText.innerText = "جاري التحضير...";
+            downloadBtn.disabled = true;
+            progressContainer.classList.remove('hidden');
+            
+            // 2. محاكاة تقدم التحميل (لأن التنزيل الفعلي يتم عبر السيرفر)
+            let width = 0;
+            const interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                } else {
+                    width += 10;
+                    progressBar.style.width = width + '%';
+                }
+            }, 200);
 
-            // التوجيه لخدمة تحميل خارجية لمعالجة الرابط
-            let downloadLink = "";
-            if (type === 'mp4') {
-                downloadLink = `https://9xbuddy.com/process?url=${encodeURIComponent(url)}`;
-            } else {
-                downloadLink = `https://loader.to/api/card/?url=${encodeURIComponent(url)}&f=mp3`;
-            }
-            window.open(downloadLink, '_blank');
-        }
+            // 3. تقنية التنزيل بدون مغادرة الصفحة:
+            // سنستخدم رابط API يقوم بإجبار المتصفح على تحميل الملف (Force Download)
+            // ملاحظة: استبدل الرابط أدناه بـ API الخاص بك إذا كان لديك سيرفر Node.js/Python
+            const proxyDownloadUrl = `https://api.download-service.com/fetch?url=${encodeURIComponent(videoUrl)}`;
+
+            // إنشاء عنصر "a" مخفي وضغط عليه برمجياً لتجنب الانتقال
+            const hiddenAnchor = document.createElement('a');
+            hiddenAnchor.href = proxyDownloadUrl;
+            hiddenAnchor.setAttribute('download', 'video.mp4'); // محاولة إجبار التنزيل
+            hiddenAnchor.style.display = 'none';
+            document.body.appendChild(hiddenAnchor);
+            
+            // ننتظر قليلاً ثم نوجه "الطلب" في الخلفية
+            setTimeout(() => {
+                hiddenAnchor.click(); // هذا سيفتح نافذة التنزيل الخاصة بالمتصفح دون ترك الصفحة
+                document.body.removeChild(hiddenAnchor);
+                
+                btnText.innerText = "تم بدء التنزيل!";
+                downloadBtn.classList.replace('bg-green-600', 'bg-blue-600');
+                
+                setTimeout(() => {
+                    btnText.innerText = "تنزيل فيديو MP4 (720p) مباشر";
+                    downloadBtn.disabled = false;
+                    downloadBtn.classList.replace('bg-blue-600', 'bg-green-600');
+                    progressContainer.classList.add('hidden');
+                    progressBar.style.width = '0%';
+                }, 3000);
+            }, 2000);
+        });
     </script>
 </body>
 </html>
