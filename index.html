@@ -3,210 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أداة معتز لتنزيل فيديوهات YouTube</title>
-    <meta name="description" content="أداة معتز المجانية لتنزيل فيديوهات اليوتيوب بسرعة وسهولة وبدون إعلانات.">
-    
+    <title>أداة معتز - معاينة وتحميل</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Tajawal', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            50: '#f0fdfa',
-                            100: '#ccfbf1',
-                            500: '#14b8a6',
-                            600: '#0d9488',
-                            900: '#134e4a',
-                        }
-                    }
+                    fontFamily: { sans: ['Tajawal', 'sans-serif'] },
+                    colors: { brand: { 500: '#14b8a6', 600: '#0d9488' } }
                 }
             }
         }
     </script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
     <style>
         body { font-family: 'Tajawal', sans-serif; }
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        .dark .glass-effect {
-            background: rgba(17, 24, 39, 0.7);
-        }
         .gradient-text {
             background: linear-gradient(to right, #14b8a6, #3b82f6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .animate-blob {
-            animation: blob 7s infinite;
-        }
-        @keyframes blob {
-            0% { transform: translate(0px, 0px) scale(1); }
-            33% { transform: translate(30px, -50px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
-            100% { transform: translate(0px, 0px) scale(1); }
-        }
     </style>
 </head>
+<body class="bg-gray-900 text-gray-200 min-h-screen flex flex-col items-center justify-center p-4">
 
-<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200 transition-colors duration-300">
+    <div class="max-w-4xl w-full text-center space-y-8">
+        <h1 class="text-5xl font-extrabold">
+            أداة معتز فيديوهات <br>
+            <span class="gradient-text">YouTube المجانية</span>
+        </h1>
 
-    <nav class="fixed w-full z-50 glass-effect border-b border-gray-200 dark:border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex-shrink-0 flex items-center">
-                    <a href="#" class="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                        <i class="fa-solid fa-bolt text-brand-500"></i>
-                        <span>معتز تيك</span>
-                    </a>
-                </div>
-                <div class="flex items-center gap-4">
-                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors">
-                        <i id="theme-toggle-dark-icon" class="fa-solid fa-moon hidden"></i>
-                        <i id="theme-toggle-light-icon" class="fa-solid fa-sun hidden"></i>
-                    </button>
-                </div>
+        <div class="max-w-xl mx-auto space-y-4">
+            <div class="flex flex-col sm:flex-row gap-3">
+                <input id="video-url" type="url" placeholder="ضع رابط الفيديو هنا..." 
+                       class="flex-1 px-5 py-4 rounded-xl border border-gray-700 bg-gray-800 focus:ring-2 focus:ring-brand-500 outline-none text-left" dir="ltr">
+                <button id="process-btn" class="px-8 py-4 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>تحليل</span>
+                </button>
             </div>
-        </div>
-    </nav>
-
-    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex flex-col items-center justify-center min-h-[80vh]">
-        <div class="absolute inset-0 z-0">
-            <div class="absolute top-0 right-0 w-72 h-72 bg-brand-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
-            <div class="absolute bottom-0 left-0 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
-        </div>
-
-        <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
-            <span class="inline-block py-1 px-3 rounded-full bg-brand-100 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400 text-sm font-semibold mb-6">
-                مجاني وسريع وبدون إعلانات
-            </span>
-            <h1 class="text-5xl md:text-6xl font-extrabold mb-8">
-                أداة معتز فيديوهات <br>
-                <span class="gradient-text">YouTube المجانية</span>
-            </h1>
-            <p class="mt-6 text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                قم بلصق رابط YouTube للتنزيل الفوري. أسهل طريقة لحفظ الفيديوهات بجودة عالية.
+            <p class="text-xs text-gray-400">
+                <i class="fa-solid fa-circle-info text-brand-500"></i> سيتم عرض الفيديو وخيارات التحميل فور إدخال الرابط.
             </p>
-
-            <div class="mt-10 max-w-xl mx-auto">
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <input id="video-url" type="url" placeholder="https://www.youtube.com/watch?v=..." 
-                           class="flex-1 px-5 py-4 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-brand-500 outline-none text-left" dir="ltr">
-                    <button id="download-btn" class="px-8 py-4 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold transition-all shadow-lg flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-download"></i>
-                        <span>تنزيل</span>
-                    </button>
-                </div>
-                <div id="status-msg" class="mt-4 text-sm hidden"></div>
-                <p class="mt-6 text-xs text-gray-500 dark:text-gray-400">
-                    <i class="fa-solid fa-circle-exclamation text-yellow-500 ml-1"></i>
-                    تأكد من احترام حقوق الطبع والنشر عند استخدام المحتوى.
-                </p>
-            </div>
         </div>
-    </section>
 
-    <section class="py-20 bg-white dark:bg-gray-800">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="p-6 rounded-2xl border border-gray-100 dark:border-gray-700 text-center">
-                    <i class="fa-solid fa-bolt text-4xl text-brand-500 mb-4"></i>
-                    <h3 class="text-xl font-bold mb-2">سرعة فائقة</h3>
-                    <p class="text-gray-600 dark:text-gray-400">تحليل وتجهيز الروابط في ثوانٍ معدودة.</p>
+        <div id="preview-section" class="hidden space-y-6 bg-gray-800 p-6 rounded-2xl border border-gray-700 animate-fade-in">
+            <h3 class="text-xl font-bold text-brand-500">معاينة الفيديو</h3>
+            
+            <div class="relative aspect-video w-full rounded-xl overflow-hidden shadow-2xl">
+                <iframe id="video-iframe" class="absolute inset-0 w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+                <div class="p-4 bg-gray-700 rounded-lg flex justify-between items-center">
+                    <span>جودة عالية MP4 (720p)</span>
+                    <button class="bg-green-600 hover:bg-green-500 px-4 py-2 rounded text-sm font-bold"><i class="fa-solid fa-download"></i></button>
                 </div>
-                <div class="p-6 rounded-2xl border border-gray-100 dark:border-gray-700 text-center">
-                    <i class="fa-solid fa-shield-halved text-4xl text-brand-500 mb-4"></i>
-                    <h3 class="text-xl font-bold mb-2">آمن تماماً</h3>
-                    <p class="text-gray-600 dark:text-gray-400">لا نطلب تسجيل دخول ولا نقوم بتخزين بياناتك.</p>
-                </div>
-                <div class="p-6 rounded-2xl border border-gray-100 dark:border-gray-700 text-center">
-                    <i class="fa-solid fa-clapperboard text-4xl text-brand-500 mb-4"></i>
-                    <h3 class="text-xl font-bold mb-2">جودة عالية</h3>
-                    <p class="text-gray-600 dark:text-gray-400">دعم تنزيل الفيديوهات بأعلى جودة متاحة.</p>
+                <div class="p-4 bg-gray-700 rounded-lg flex justify-between items-center">
+                    <span>صوت فقط MP3</span>
+                    <button class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded text-sm font-bold"><i class="fa-solid fa-music"></i></button>
                 </div>
             </div>
         </div>
-    </section>
-
-    <footer class="bg-gray-100 dark:bg-gray-900 py-12 border-t border-gray-200 dark:border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-500 dark:text-gray-400">© 2026 مطور بواسطة معتز. جميع الحقوق محفوظة.</p>
-        </div>
-    </footer>
+    </div>
 
     <script>
-        // --- Dark Mode Logic ---
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const darkIcon = document.getElementById('theme-toggle-dark-icon');
-        const lightIcon = document.getElementById('theme-toggle-light-icon');
-
-        function updateIcons() {
-            if (document.documentElement.classList.contains('dark')) {
-                lightIcon.classList.remove('hidden');
-                darkIcon.classList.add('hidden');
-            } else {
-                darkIcon.classList.remove('hidden');
-                lightIcon.classList.add('hidden');
-            }
-        }
-
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-        updateIcons();
-
-        themeToggleBtn.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-            localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-            updateIcons();
-        });
-
-        // --- Download Button Logic ---
-        const downloadBtn = document.getElementById('download-btn');
         const urlInput = document.getElementById('video-url');
-        const statusMsg = document.getElementById('status-msg');
+        const processBtn = document.getElementById('process-btn');
+        const previewSection = document.getElementById('preview-section');
+        const videoIframe = document.getElementById('video-iframe');
 
-        downloadBtn.addEventListener('click', () => {
-            const url = urlInput.value.trim();
-            if (!url) {
-                showStatus('يرجى إدخال رابط الفيديو أولاً', 'text-red-500');
-                return;
-            }
-            
-            if (!url.includes('youtube.com') && !url.includes('youtu.be')) {
-                showStatus('عذراً، الرابط غير مدعوم. يرجى إدخال رابط يوتيوب صحيح', 'text-yellow-500');
-                return;
-            }
-
-            // محاكاة عملية البدء
-            downloadBtn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> جاري المعالجة...';
-            downloadBtn.disabled = true;
-
-            setTimeout(() => {
-                showStatus('تم العثور على الفيديو! جاري تحويلك لصفحة التحميل...', 'text-green-500');
-                downloadBtn.innerHTML = '<i class="fa-solid fa-download"></i> تنزيل';
-                downloadBtn.disabled = false;
-                // هنا يمكنك ربط الكود بـ API حقيقي للتنزيل
-            }, 2000);
-        });
-
-        function showStatus(msg, colorClass) {
-            statusMsg.textContent = msg;
-            statusMsg.className = `mt-4 text-sm ${colorClass}`;
-            statusMsg.classList.remove('hidden');
+        // وظيفة استخراج معرف الفيديو من الرابط
+        function getYoutubeID(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
         }
+
+        function handleProcess() {
+            const url = urlInput.value.trim();
+            const videoID = getYoutubeID(url);
+
+            if (videoID) {
+                // عرض القسم وتحديث الإطار
+                previewSection.classList.remove('hidden');
+                videoIframe.src = `https://www.youtube.com/embed/${videoID}`;
+                
+                // التمرير التلقائي للمعاينة
+                previewSection.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                alert('يرجى إدخال رابط يوتيوب صحيح');
+                previewSection.classList.add('hidden');
+                videoIframe.src = "";
+            }
+        }
+
+        // التحليل عند الضغط على الزر
+        processBtn.addEventListener('click', handleProcess);
+
+        // التحليل التلقائي عند لصق الرابط
+        urlInput.addEventListener('input', () => {
+            if (urlInput.value.length > 20) {
+                handleProcess();
+            }
+        });
     </script>
 </body>
 </html>
