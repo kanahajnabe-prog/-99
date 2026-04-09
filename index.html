@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أداة معتز - تنزيل مباشر</title>
+    <title>أداة معتز لتنزيل فيديوهات YouTube</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -16,115 +17,124 @@
             }
         }
     </script>
+
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
-        body { font-family: 'Tajawal', sans-serif; background-color: #0f172a; color: white; }
+        body { font-family: 'Tajawal', sans-serif; transition: background-color 0.3s; }
         .gradient-text { background: linear-gradient(to right, #14b8a6, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        /* أنيميشن التحميل */
-        .loader-bar { width: 0%; height: 4px; background: #14b8a6; transition: width 0.5s; }
+        .glass-card { background: rgba(31, 41, 55, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(75, 85, 99, 0.4); }
+        .loader-bar { width: 0%; height: 4px; background: #14b8a6; transition: width 0.4s; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4">
 
-    <div class="max-w-4xl w-full text-center space-y-8">
-        <h1 class="text-5xl font-extrabold">أداة معتز <span class="gradient-text">للتنزيل المباشر</span></h1>
+<body class="bg-[#0f172a] text-gray-100 min-h-screen flex flex-col items-center p-4 md:p-8">
 
-        <div class="max-w-xl mx-auto">
-            <input id="video-url" type="url" placeholder="ضع رابط الفيديو هنا..." 
-                   class="w-full px-5 py-4 rounded-xl border border-gray-700 bg-gray-800 outline-none text-left mb-4" dir="ltr">
-            
-            <div id="preview-area" class="hidden animate-fade-in space-y-4 bg-gray-800 p-6 rounded-2xl border border-gray-700 shadow-2xl">
-                <div class="relative aspect-video rounded-lg overflow-hidden border border-gray-600">
-                    <iframe id="video-iframe" class="absolute inset-0 w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
-                </div>
+    <header class="w-full max-w-4xl flex justify-between items-center mb-16">
+        <div class="flex items-center gap-2">
+            <i class="fa-solid fa-bolt text-brand-500 text-3xl"></i>
+            <span class="text-2xl font-bold tracking-tight">معتز تيك</span>
+        </div>
+        <div class="text-sm text-gray-400">أداة مجانية 100%</div>
+    </header>
+
+    <main class="w-full max-w-3xl text-center space-y-10">
+        <div class="space-y-4">
+            <h1 class="text-4xl md:text-6xl font-black">أداة معتز فيديوهات <br> <span class="gradient-text">YouTube المجانية</span></h1>
+            <p class="text-gray-400 text-lg">الصق رابط الفيديو أدناه للمعاينة والتحميل المباشر</p>
+        </div>
+
+        <div class="relative max-w-2xl mx-auto">
+            <input id="video-url" type="url" placeholder="https://www.youtube.com/watch?v=..." 
+                   class="w-full px-6 py-5 rounded-2xl bg-gray-800/50 border border-gray-700 outline-none focus:ring-2 focus:ring-brand-500 text-left transition-all" dir="ltr">
+            <button id="analyze-btn" class="mt-4 w-full sm:absolute sm:mt-0 sm:left-2 sm:top-2 sm:bottom-2 sm:w-auto px-8 bg-brand-600 hover:bg-brand-500 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                <i class="fa-solid fa-magnifying-glass"></i> تحليل
+            </button>
+        </div>
+
+        <div id="result-container" class="hidden animate-fade-in space-y-6">
+            <div class="glass-card p-6 rounded-3xl shadow-2xl">
+                <h3 class="text-lg font-bold mb-4 text-brand-500 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-eye"></i> معاينة الفيديو
+                </h3>
                 
-                <div id="progress-container" class="hidden w-full bg-gray-700 rounded-full h-1 overflow-hidden">
+                <div class="relative aspect-video rounded-xl overflow-hidden border border-gray-700 mb-6">
+                    <iframe id="video-preview" class="absolute inset-0 w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
+                </div>
+
+                <div id="progress-container" class="hidden w-full bg-gray-700 rounded-full h-1 mb-6 overflow-hidden">
                     <div id="progress-bar" class="loader-bar"></div>
                 </div>
 
-                <div class="grid grid-cols-1 gap-4">
-                    <button id="direct-download-btn" class="w-full py-4 bg-green-600 hover:bg-green-500 rounded-xl font-bold flex items-center justify-center gap-2 transition-all">
-                        <i class="fa-solid fa-file-arrow-down"></i>
-                        <span id="btn-text">تنزيل فيديو MP4 (720p) مباشر</span>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button onclick="handleDownload('mp4')" class="flex items-center justify-between p-4 bg-green-600/20 hover:bg-green-600/30 border border-green-600/50 rounded-2xl transition-all group">
+                        <span class="font-bold">تنزيل فيديو MP4 (720p)</span>
+                        <i class="fa-solid fa-download group-hover:bounce"></i>
                     </button>
-                    <p id="download-note" class="text-xs text-gray-400">سيتم بدء التنزيل في المتصفح تلقائياً</p>
+                    <button onclick="handleDownload('mp3')" class="flex items-center justify-between p-4 bg-blue-600/20 hover:bg-blue-600/30 border border-blue-600/50 rounded-2xl transition-all group">
+                        <span class="font-bold">تنزيل صوت MP3</span>
+                        <i class="fa-solid fa-music group-hover:bounce"></i>
+                    </button>
                 </div>
+                <p class="mt-4 text-xs text-gray-500 italic">ملاحظة: سيتم فتح صفحة المعالجة لبدء التنزيل تلقائياً</p>
             </div>
         </div>
-    </div>
+    </main>
+
+    <footer class="mt-20 text-gray-600 text-sm">
+        © 2026 مطور بواسطة معتز | جميع الحقوق محفوظة
+    </footer>
 
     <script>
         const urlInput = document.getElementById('video-url');
-        const previewArea = document.getElementById('preview-area');
-        const videoIframe = document.getElementById('video-iframe');
-        const downloadBtn = document.getElementById('direct-download-btn');
+        const analyzeBtn = document.getElementById('analyze-btn');
+        const resultContainer = document.getElementById('result-container');
+        const previewFrame = document.getElementById('video-preview');
         const progressBar = document.getElementById('progress-bar');
         const progressContainer = document.getElementById('progress-container');
-        const btnText = document.getElementById('btn-text');
 
-        // استخراج الـ ID للعرض
-        urlInput.addEventListener('input', () => {
-            const url = urlInput.value.trim();
+        // وظيفة استخراج المعرف
+        function getID(url) {
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
             const match = url.match(regExp);
-            
-            if (match && match[2].length === 11) {
-                previewArea.classList.remove('hidden');
-                videoIframe.src = `https://www.youtube.com/embed/${match[2]}`;
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
+        // معالجة الرابط
+        function startAnalysis() {
+            const id = getID(urlInput.value.trim());
+            if (id) {
+                resultContainer.classList.remove('hidden');
+                previewFrame.src = `https://www.youtube.com/embed/${id}`;
+                resultContainer.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                alert("الرابط غير صحيح، يرجى التأكد من رابط يوتيوب");
             }
-        });
+        }
 
-        // ميكانيكية التنزيل "الدايركت"
-        downloadBtn.addEventListener('click', async () => {
-            const videoUrl = urlInput.value;
-            if(!videoUrl) return;
+        analyzeBtn.addEventListener('click', startAnalysis);
+        urlInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') startAnalysis(); });
 
-            // 1. تغيير حالة الزر
-            btnText.innerText = "جاري التحضير...";
-            downloadBtn.disabled = true;
+        // التنزيل المباشر (باستخدام محرك حقيقي لتجنب خطأ DNS)
+        function handleDownload(format) {
+            const url = urlInput.value.trim();
             progressContainer.classList.remove('hidden');
-            
-            // 2. محاكاة تقدم التحميل (لأن التنزيل الفعلي يتم عبر السيرفر)
-            let width = 0;
-            const interval = setInterval(() => {
-                if (width >= 100) {
-                    clearInterval(interval);
-                } else {
-                    width += 10;
-                    progressBar.style.width = width + '%';
-                }
-            }, 200);
+            progressBar.style.width = '100%';
 
-            // 3. تقنية التنزيل بدون مغادرة الصفحة:
-            // سنستخدم رابط API يقوم بإجبار المتصفح على تحميل الملف (Force Download)
-            // ملاحظة: استبدل الرابط أدناه بـ API الخاص بك إذا كان لديك سيرفر Node.js/Python
-            const proxyDownloadUrl = `https://api.download-service.com/fetch?url=${encodeURIComponent(videoUrl)}`;
-
-            // إنشاء عنصر "a" مخفي وضغط عليه برمجياً لتجنب الانتقال
-            const hiddenAnchor = document.createElement('a');
-            hiddenAnchor.href = proxyDownloadUrl;
-            hiddenAnchor.setAttribute('download', 'video.mp4'); // محاولة إجبار التنزيل
-            hiddenAnchor.style.display = 'none';
-            document.body.appendChild(hiddenAnchor);
-            
-            // ننتظر قليلاً ثم نوجه "الطلب" في الخلفية
             setTimeout(() => {
-                hiddenAnchor.click(); // هذا سيفتح نافذة التنزيل الخاصة بالمتصفح دون ترك الصفحة
-                document.body.removeChild(hiddenAnchor);
-                
-                btnText.innerText = "تم بدء التنزيل!";
-                downloadBtn.classList.replace('bg-green-600', 'bg-blue-600');
+                // استخدام محرك معالجة حقيقي (مثل 9xbuddy) لضمان العمل
+                let finalUrl = `https://9xbuddy.org/process?url=${encodeURIComponent(url)}`;
+                if(format === 'mp3') finalUrl += "&type=audio";
+
+                window.open(finalUrl, '_blank'); // التنزيل يبدأ في نافذة جديدة دون مغادرة موقعك
                 
                 setTimeout(() => {
-                    btnText.innerText = "تنزيل فيديو MP4 (720p) مباشر";
-                    downloadBtn.disabled = false;
-                    downloadBtn.classList.replace('bg-blue-600', 'bg-green-600');
                     progressContainer.classList.add('hidden');
                     progressBar.style.width = '0%';
-                }, 3000);
-            }, 2000);
-        });
+                }, 2000);
+            }, 800);
+        }
     </script>
 </body>
 </html>
